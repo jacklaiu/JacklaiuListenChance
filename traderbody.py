@@ -7,6 +7,7 @@ import util.tools as util
 from databody import DataBody
 from analysisbody import AnalysisBody
 from util.smtpclient import SmtpClient
+
 class TraderBody(object):
 
     def __init__(self, security, frequency, starttime_fortest, endtime_fortest=util.getYMDHMS(),
@@ -40,13 +41,13 @@ class TraderBody(object):
         refreshed = self.db.refresh(nowTimeString)
         if refreshed is False:
             return
-        self.layer1()
+        return self.layer1()
 
     def layer1(self):
         ret_5IsLt10 = self.ab.doubleEMALargerThan(df=self.db.df, from_timeperiod=self.layer1_from_timeperiod, to_timeperiod=self.layer1_to_timeperiod)
         flag_5IsLt10 = ret_5IsLt10['ret']
         ret_rsi9_active = self.ab.rsiIsBetween(df=self.db.df, top=self.layer1_rsi_top, bottom=self.layer1_rsi_bottom, timeperiod=self.layer1_rsi_timeperiod)
-        print(ret_rsi9_active['val'])
+        # print(ret_rsi9_active['val'])
         flag_rsi9_active = ret_rsi9_active['ret'] is not True
         if flag_5IsLt10 is True and flag_rsi9_active is True and str(self.layer1_ownPosition) == '0':
             # mark pre
@@ -57,9 +58,10 @@ class TraderBody(object):
             self.layer1_startRate = 0
             self.layer1_pre_flag_5IsLt10 = True
             nowTimeString = str(self.db.df.index.tolist()[-1])
-            print('duo start: ' + nowTimeString)
-            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 多。",
-                                     content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
+            # print('duo start: ' + nowTimeString)
+            # self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 多。",
+            #                          content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
+            return 'duo'
 
         elif flag_5IsLt10 is False and flag_rsi9_active is True and str(self.layer1_ownPosition) == '0':
             # mark pre
@@ -70,10 +72,11 @@ class TraderBody(object):
             self.layer1_startRate = 0
             self.layer1_pre_flag_5IsLt10 = False
             nowTimeString = str(self.db.df.index.tolist()[-1])
-            print('kon start: ' + nowTimeString)
-            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 空。",
-                                     content='请手动开仓并设置止损线。',
-                                     receivers='jacklaiu@163.com')
+            # print('kon start: ' + nowTimeString)
+            # self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 空。",
+            #                          content='请手动开仓并设置止损线。',
+            #                          receivers='jacklaiu@163.com')
+            return 'kon'
 
         elif str(self.layer1_ownPosition) != '0' and self.layer1_pre_flag_5IsLt10 != flag_5IsLt10:
             ######################################################################
@@ -87,13 +90,13 @@ class TraderBody(object):
             else:
                 self.layer1_startRate = (1 + round((startClose - endClose) / startClose, 4))
             nowTimeString = str(self.db.df.index.tolist()[-1])
-            print("end trade: " + nowTimeString + " ownerPosition: " + str(self.layer1_ownPosition)
-                  + " startCount: " + str(self.layer1_startcount)
-                  + " startRate: " + str(self.layer1_startRate))
-            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 结束持仓提示。",
-                                     content='如未清仓请手动操作。',
-                                     receivers='jacklaiu@163.com')
-            print("\n")
+            # print("end trade: " + nowTimeString + " ownerPosition: " + str(self.layer1_ownPosition)
+            #       + " startCount: " + str(self.layer1_startcount)
+            #       + " startRate: " + str(self.layer1_startRate))
+            # self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 结束持仓提示。",
+            #                          content='如未清仓请手动操作。',
+            #                          receivers='jacklaiu@163.com')
+            #print("\n")
             self.layer1_rates.append(self.layer1_startRate)
             self.layer1_starttime_rate_map[nowTimeString] = self.layer1_startRate
             ######################################################################
@@ -104,6 +107,8 @@ class TraderBody(object):
             self.layer1_startcount = 0
             self.layer1_startRate = 0
 
+            return 'clear'
+
         else:
             self.layer1_startcount = self.layer1_startcount + 1
             indexes = self.db.df.index.tolist()
@@ -112,6 +117,8 @@ class TraderBody(object):
             startClose = startDf.iloc[0]['close']
             endClose = closeDf.iloc[0]['close']
             self.layer1_startRate = (1 + round((endClose - startClose)/startClose, 4))
+
+            return 'still'
 
         # nowTimeString = str(self.db.df.index.tolist()[-1])
         # print(nowTimeString + " ownerPosition: " + str(self.layer1_ownPosition)
@@ -127,31 +134,55 @@ class TraderBody(object):
             if nowTimeString > self.endtime_fortest:
                 return
             action = self.getAction(nowTimeString)
-            if action == 'buy':
-                pass
-            if action == 'sell':
-                pass
-            if action == 'short':
-                pass
-            if action == 'cover':
+            if action == 'duo':
+                print('[' + nowTimeString + ']: ' + str(action))
+                self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 多。",
+                                         content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
+            if action == 'kon':
+                print('[' + nowTimeString + ']: ' + str(action))
+                self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 空。",
+                                         content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
+            if action == 'clear':
+                print('[' + nowTimeString + ']: ' + str(action))
+                self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 结束持仓提示。",
+                                         content='如未清仓请手动操作。',
+                                         receivers='jacklaiu@163.com')
+            if action == 'still':
+                print('[' + nowTimeString + ']: ' + str(action))
                 pass
 
+    def tick(self):
+        nowTimeString = util.getYMDHMS()
+        action = self.getAction(nowTimeString)
+        if action == 'duo':
+            print('[' + nowTimeString + ']: ' + str(action))
+            pass
+        if action == 'kon':
+            print('[' + nowTimeString + ']: ' + str(action))
+            pass
+        if action == 'clear':
+            print('[' + nowTimeString + ']: ' + str(action))
+            pass
+        if action == 'still':
+            print('[' + nowTimeString + ']: ' + str(action))
+            pass
 
-# ft = 5
-# tt = 10
-# rt = 65
-# rb = 35
-# rtp = 9
-# trader = TraderBody(security='RB8888.XSGE', frequency='15m', starttime_fortest='2019-05-23 09:00:00',
-#                     layer1_from_timeperiod=ft, layer1_to_timeperiod=tt,
-#                     layer1_rsi_top=rt, layer1_rsi_bottom=rb, layer1_rsi_timeperiod=rtp)
-# trader.testMain()
-# total_rate = 1
-# for r in trader.layer1_rates:
-#     total_rate = total_rate * r
-# print(total_rate)
-#
-# items = sorted(trader.layer1_starttime_rate_map.items(), key=lambda x: x[1], reverse=True)
-# for item in items:
-#     print(item)
+
+ft = 5
+tt = 10
+rt = 65
+rb = 35
+rtp = 9
+trader = TraderBody(security='RB8888.XSGE', frequency='15m', starttime_fortest='2019-05-23 09:00:00',
+                    layer1_from_timeperiod=ft, layer1_to_timeperiod=tt,
+                    layer1_rsi_top=rt, layer1_rsi_bottom=rb, layer1_rsi_timeperiod=rtp)
+trader.testMain()
+total_rate = 1
+for r in trader.layer1_rates:
+    total_rate = total_rate * r
+print(total_rate)
+
+items = sorted(trader.layer1_starttime_rate_map.items(), key=lambda x: x[1], reverse=True)
+for item in items:
+    print(item)
 
