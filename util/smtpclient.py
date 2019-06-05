@@ -17,5 +17,5 @@ class SmtpClient():
             pass
         print('Send!')
 
-s = SmtpClient()
-s.sendMail(subject="√DUO RB2001", content="√DUO")
+# s = SmtpClient()
+# s.sendMail(subject="√DUO RB2001", content="√DUO")

@@ -6,12 +6,14 @@ import numpy as np
 import util.tools as util
 from databody import DataBody
 from analysisbody import AnalysisBody
-
+from util.smtpclient import SmtpClient
 class TraderBody(object):
 
     def __init__(self, security, frequency, starttime_fortest, endtime_fortest=util.getYMDHMS(),
                  layer1_from_timeperiod=5, layer1_to_timeperiod=10,
                  layer1_rsi_top=65, layer1_rsi_bottom=35, layer1_rsi_timeperiod=9):
+        self.security = security
+        self.frequency = frequency
         self.db = DataBody(security, frequency)
         self.ab = AnalysisBody()
         self.ownPosition = 0
@@ -30,6 +32,8 @@ class TraderBody(object):
         self.layer1_pre_flag_5IsLt10 = False
         self.layer1_rates = []
         self.layer1_starttime_rate_map = {}
+
+        self.smtpClient = SmtpClient()
 
     # return: buy - sell ||| short - cover
     def getAction(self, nowTimeString):
@@ -54,6 +58,8 @@ class TraderBody(object):
             self.layer1_pre_flag_5IsLt10 = True
             nowTimeString = str(self.db.df.index.tolist()[-1])
             print('duo start: ' + nowTimeString)
+            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 多。",
+                                     content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
 
         elif flag_5IsLt10 is False and flag_rsi9_active is True and str(self.layer1_ownPosition) == '0':
             # mark pre
@@ -65,6 +71,9 @@ class TraderBody(object):
             self.layer1_pre_flag_5IsLt10 = False
             nowTimeString = str(self.db.df.index.tolist()[-1])
             print('kon start: ' + nowTimeString)
+            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 空。",
+                                     content='请手动开仓并设置止损线。',
+                                     receivers='jacklaiu@163.com')
 
         elif str(self.layer1_ownPosition) != '0' and self.layer1_pre_flag_5IsLt10 != flag_5IsLt10:
             ######################################################################
@@ -81,6 +90,9 @@ class TraderBody(object):
             print("end trade: " + nowTimeString + " ownerPosition: " + str(self.layer1_ownPosition)
                   + " startCount: " + str(self.layer1_startcount)
                   + " startRate: " + str(self.layer1_startRate))
+            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 结束持仓提示。",
+                                     content='如未清仓请手动操作。',
+                                     receivers='jacklaiu@163.com')
             print("\n")
             self.layer1_rates.append(self.layer1_startRate)
             self.layer1_starttime_rate_map[nowTimeString] = self.layer1_startRate
@@ -125,21 +137,21 @@ class TraderBody(object):
                 pass
 
 
-ft = 5
-tt = 10
-rt = 65
-rb = 35
-rtp = 9
-trader = TraderBody(security='RB8888.XSGE', frequency='15m', starttime_fortest='2019-05-23 09:00:00',
-                    layer1_from_timeperiod=ft, layer1_to_timeperiod=tt,
-                    layer1_rsi_top=rt, layer1_rsi_bottom=rb, layer1_rsi_timeperiod=rtp)
-trader.testMain()
-total_rate = 1
-for r in trader.layer1_rates:
-    total_rate = total_rate * r
-print(total_rate)
-
-items = sorted(trader.layer1_starttime_rate_map.items(), key=lambda x: x[1], reverse=True)
-for item in items:
-    print(item)
+# ft = 5
+# tt = 10
+# rt = 65
+# rb = 35
+# rtp = 9
+# trader = TraderBody(security='RB8888.XSGE', frequency='15m', starttime_fortest='2019-05-23 09:00:00',
+#                     layer1_from_timeperiod=ft, layer1_to_timeperiod=tt,
+#                     layer1_rsi_top=rt, layer1_rsi_bottom=rb, layer1_rsi_timeperiod=rtp)
+# trader.testMain()
+# total_rate = 1
+# for r in trader.layer1_rates:
+#     total_rate = total_rate * r
+# print(total_rate)
+#
+# items = sorted(trader.layer1_starttime_rate_map.items(), key=lambda x: x[1], reverse=True)
+# for item in items:
+#     print(item)
 
