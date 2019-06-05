@@ -506,3 +506,5 @@ def getRate(fromPrice, toPrice):
     toPrice = float(toPrice)
     rate = round(round(((toPrice - fromPrice) / fromPrice), 4) * 100, 4)
     return rate
+
+

@@ -42,6 +42,7 @@ class TraderBody(object):
         ret_5IsLt10 = self.ab.doubleEMALargerThan(df=self.db.df, from_timeperiod=self.layer1_from_timeperiod, to_timeperiod=self.layer1_to_timeperiod)
         flag_5IsLt10 = ret_5IsLt10['ret']
         ret_rsi9_active = self.ab.rsiIsBetween(df=self.db.df, top=self.layer1_rsi_top, bottom=self.layer1_rsi_bottom, timeperiod=self.layer1_rsi_timeperiod)
+        print(ret_rsi9_active['val'])
         flag_rsi9_active = ret_rsi9_active['ret'] is not True
         if flag_5IsLt10 is True and flag_rsi9_active is True and str(self.layer1_ownPosition) == '0':
             # mark pre
@@ -77,9 +78,10 @@ class TraderBody(object):
             else:
                 self.layer1_startRate = (1 + round((startClose - endClose) / startClose, 4))
             nowTimeString = str(self.db.df.index.tolist()[-1])
-            print("!!!!!!!!!!!!!!!!!" + nowTimeString + " ownerPosition: " + str(self.layer1_ownPosition)
+            print("end trade: " + nowTimeString + " ownerPosition: " + str(self.layer1_ownPosition)
                   + " startCount: " + str(self.layer1_startcount)
                   + " startRate: " + str(self.layer1_startRate))
+            print("\n")
             self.layer1_rates.append(self.layer1_startRate)
             self.layer1_starttime_rate_map[nowTimeString] = self.layer1_startRate
             ######################################################################
@@ -128,7 +130,7 @@ tt = 10
 rt = 65
 rb = 35
 rtp = 9
-trader = TraderBody(security='HC8888.XSGE', frequency='17m', starttime_fortest='2019-01-01 22:00:00',
+trader = TraderBody(security='RB8888.XSGE', frequency='15m', starttime_fortest='2019-05-23 09:00:00',
                     layer1_from_timeperiod=ft, layer1_to_timeperiod=tt,
                     layer1_rsi_top=rt, layer1_rsi_bottom=rb, layer1_rsi_timeperiod=rtp)
 trader.testMain()

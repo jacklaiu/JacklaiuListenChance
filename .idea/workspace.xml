@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="39cbb46b-2606-4caa-b2b1-85bc9e906aca" name="Default Changelist" comment="" />
+    <list default="true" id="39cbb46b-2606-4caa-b2b1-85bc9e906aca" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/util/dataviewer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/JacklaiuListenChance.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/JacklaiuListenChance.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/traderbody.py" beforeDir="false" afterPath="$PROJECT_DIR$/traderbody.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/tools.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +26,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/util/smtpclient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="17" column="22" lean-forward="true" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+            <state relative-caret-position="440">
+              <caret line="20" column="49" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -28,8 +35,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/util/tools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="535">
-              <caret line="309" column="4" selection-start-line="309" selection-start-column="4" selection-end-line="309" selection-end-column="4" />
+            <state relative-caret-position="322">
+              <caret line="510" selection-start-line="510" selection-end-line="510" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/util/dataviewer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#1#32#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -49,7 +67,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/runable.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
+            <state relative-caret-position="418">
               <caret line="19" selection-start-line="19" selection-end-line="19" />
               <folding>
                 <element signature="e#1#17#0" expanded="true" />
@@ -73,8 +91,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/analysisbody.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="24" column="27" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="27" />
+            <state relative-caret-position="154">
+              <caret line="13" column="20" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="20" />
               <folding>
                 <element signature="e#1#17#0" expanded="true" />
               </folding>
@@ -85,8 +103,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/traderbody.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="125" column="6" lean-forward="true" selection-start-line="125" selection-start-column="6" selection-end-line="125" selection-end-column="6" />
+            <state relative-caret-position="130">
+              <caret line="128" column="7" lean-forward="true" selection-start-line="128" selection-start-column="7" selection-end-line="128" selection-end-column="7" />
               <folding>
                 <element signature="e#1#17#0" expanded="true" />
               </folding>
@@ -111,27 +129,36 @@
       <find>doubleEMALargerThan</find>
       <find>2019-02-25 22:56:00</find>
       <find>2019-04-09 13:38:00</find>
+      <find>!!!!!!!!!!!!!</find>
+      <find>layer1_rsi_timeperiod</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/util/tools.py" />
         <option value="$PROJECT_DIR$/Main.py" />
         <option value="$PROJECT_DIR$/stategybody.py" />
         <option value="$PROJECT_DIR$/runable.py" />
         <option value="$PROJECT_DIR$/databody.py" />
-        <option value="$PROJECT_DIR$/analysisbody.py" />
         <option value="$PROJECT_DIR$/util/smtpclient.py" />
+        <option value="$PROJECT_DIR$/util/tools.py" />
+        <option value="$PROJECT_DIR$/util/dataviewer.py" />
+        <option value="$PROJECT_DIR$/analysisbody.py" />
         <option value="$PROJECT_DIR$/traderbody.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="177" />
-    <option name="y" value="112" />
-    <option name="width" value="1508" />
-    <option name="height" value="812" />
+    <option name="x" value="573" />
+    <option name="y" value="-12" />
+    <option name="width" value="698" />
+    <option name="height" value="829" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -200,28 +227,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="analysisbody" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="JacklaiuListenChance" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/analysisbody.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="databody" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="JacklaiuListenChance" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -236,6 +241,25 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/databody.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="dataviewer" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="JacklaiuListenChance" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/util" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/dataviewer.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -310,10 +334,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.traderbody" />
+        <item itemvalue="Python.dataviewer" />
         <item itemvalue="Python.smtpclient" />
         <item itemvalue="Python.databody" />
         <item itemvalue="Python.runable" />
-        <item itemvalue="Python.analysisbody" />
       </list>
     </recent_temporary>
   </component>
@@ -338,11 +362,12 @@
       <workItem from="1559357552458" duration="8092000" />
       <workItem from="1559651887906" duration="5586000" />
       <workItem from="1559697813945" duration="7946000" />
+      <workItem from="1559740555047" duration="8451000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83305000" />
+    <option name="totallyTimeSpent" value="91756000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -356,7 +381,7 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12100213" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.122068234" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -371,12 +396,12 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.38136512" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.4383117" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.38611713" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" sideWeight="0.4859967" visible="true" weight="0.1663113" />
-      <window_info anchor="right" x="0" y="0" width="310" height="613" id="Documentation" order="4" sideWeight="0.5140033" side_tool="true" visible="true" weight="0.1663113" />
+      <window_info anchor="right" id="SciView" order="3" sideWeight="0.48409894" visible="true" weight="0.24040511" />
+      <window_info anchor="right" x="0" y="0" width="310" height="613" id="Documentation" order="4" sideWeight="0.5159011" side_tool="true" visible="true" weight="0.24040511" />
       <window_info anchor="right" id="Database" order="5" />
     </layout>
   </component>
@@ -405,24 +430,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/util/smtpclient.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="22" lean-forward="true" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/util/tools.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="309" column="4" selection-start-line="309" selection-start-column="4" selection-end-line="309" selection-end-column="4" />
+        <state relative-caret-position="322">
+          <caret line="510" selection-start-line="510" selection-end-line="510" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/analysisbody.py">
+    <entry file="file://C:/vnstudio/Lib/site-packages/pandas/plotting/_converter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="24" column="27" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="27" />
+        <state relative-caret-position="199">
+          <caret line="128" selection-start-line="128" selection-end-line="128" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/dataviewer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#1#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/smtpclient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="20" column="49" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runable.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="e#1#17#0" expanded="true" />
           </folding>
@@ -439,10 +480,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runable.py">
+    <entry file="file://$PROJECT_DIR$/analysisbody.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="154">
+          <caret line="13" column="20" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="20" />
           <folding>
             <element signature="e#1#17#0" expanded="true" />
           </folding>
@@ -451,8 +492,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/traderbody.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="125" column="6" lean-forward="true" selection-start-line="125" selection-start-column="6" selection-end-line="125" selection-end-column="6" />
+        <state relative-caret-position="130">
+          <caret line="128" column="7" lean-forward="true" selection-start-line="128" selection-start-column="7" selection-end-line="128" selection-end-column="7" />
           <folding>
             <element signature="e#1#17#0" expanded="true" />
           </folding>
