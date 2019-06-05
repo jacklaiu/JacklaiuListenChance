@@ -10,7 +10,7 @@ from util.smtpclient import SmtpClient
 
 class TraderBody(object):
 
-    def __init__(self, security, frequency, starttime_fortest, endtime_fortest=util.getYMDHMS(),
+    def __init__(self, security, frequency, starttime_fortest=None, endtime_fortest=util.getYMDHMS(),
                  layer1_from_timeperiod=5, layer1_to_timeperiod=10,
                  layer1_rsi_top=65, layer1_rsi_bottom=35, layer1_rsi_timeperiod=9):
         self.security = security
@@ -168,21 +168,21 @@ class TraderBody(object):
             pass
 
 
-ft = 5
-tt = 10
-rt = 65
-rb = 35
-rtp = 9
-trader = TraderBody(security='RB8888.XSGE', frequency='15m', starttime_fortest='2019-05-23 09:00:00',
-                    layer1_from_timeperiod=ft, layer1_to_timeperiod=tt,
-                    layer1_rsi_top=rt, layer1_rsi_bottom=rb, layer1_rsi_timeperiod=rtp)
-trader.testMain()
-total_rate = 1
-for r in trader.layer1_rates:
-    total_rate = total_rate * r
-print(total_rate)
-
-items = sorted(trader.layer1_starttime_rate_map.items(), key=lambda x: x[1], reverse=True)
-for item in items:
-    print(item)
+# ft = 5
+# tt = 10
+# rt = 65
+# rb = 35
+# rtp = 9
+# trader = TraderBody(security='RB8888.XSGE', frequency='15m', starttime_fortest='2019-05-23 09:00:00',
+#                     layer1_from_timeperiod=ft, layer1_to_timeperiod=tt,
+#                     layer1_rsi_top=rt, layer1_rsi_bottom=rb, layer1_rsi_timeperiod=rtp)
+# trader.testMain()
+# total_rate = 1
+# for r in trader.layer1_rates:
+#     total_rate = total_rate * r
+# print(total_rate)
+#
+# items = sorted(trader.layer1_starttime_rate_map.items(), key=lambda x: x[1], reverse=True)
+# for item in items:
+#     print(item)
 

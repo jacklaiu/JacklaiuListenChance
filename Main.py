@@ -1,5 +1,7 @@
 from traderbody import TraderBody
 import time
+import util.tools as util
+
 ft = 5
 tt = 10
 rt = 65
@@ -12,7 +14,7 @@ trader = TraderBody(security='RB8888.XSGE', frequency='17m',
                     layer1_rsi_bottom=rb,
                     layer1_rsi_timeperiod=rtp
                     )
-
 while True:
-
-    time.sleep(1)
+    trader.tick()
+    time.sleep(6)
+    print('[' + util.getYMDHMS() + ']: tick...')
