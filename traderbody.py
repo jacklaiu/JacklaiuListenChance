@@ -156,16 +156,19 @@ class TraderBody(object):
         action = self.getAction(nowTimeString)
         if action == 'duo':
             print('[' + nowTimeString + ']: ' + str(action))
-            pass
+            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 多。",
+                                     content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
         if action == 'kon':
             print('[' + nowTimeString + ']: ' + str(action))
-            pass
+            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 空。",
+                                     content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
         if action == 'clear':
             print('[' + nowTimeString + ']: ' + str(action))
-            pass
+            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 结束持仓提示。",
+                                     content='如未清仓请手动操作。',
+                                     receivers='jacklaiu@163.com')
         if action == 'still':
             print('[' + nowTimeString + ']: ' + str(action))
-            pass
 
 
 # ft = 5
