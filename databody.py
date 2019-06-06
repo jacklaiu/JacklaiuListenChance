@@ -16,6 +16,19 @@ class DataBody(object):
         self._lastaccesstimestampObj = {'lastaccesstimestamp': None}
         self._to0100_securies_str = "ZN"
 
+    def getLastestPrice(self, nowTimeString=None):
+        jqdatasdk.auth('13268108673', 'king20110713')
+        newDf = jqdatasdk.get_price(
+            security=self.security,
+            count=1,
+            end_date=nowTimeString[0:nowTimeString.rindex(':') + 1] + '30',
+            frequency=self.frequency,
+            fields=['close']
+        )
+        newIndex = newDf.index.tolist()[-1]
+        price = newDf.loc[newIndex]['close']
+        return price
+
     def refresh(self, nowTimeString=None):
         if self._isNeedRefresh(nowTimeString) is False:
             return False

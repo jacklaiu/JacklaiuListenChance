@@ -29,10 +29,13 @@ class TraderBody(object):
         self.layer1_pre1_ownerPosition = None
         self.layer1_ownPosition = 0
         self.layer1_startcount = 0
+        self.layer1_startprice = 0
         self.layer1_startRate = 0
         self.layer1_pre_flag_5IsLt10 = False
         self.layer1_rates = []
         self.layer1_starttime_rate_map = {}
+        # 策略层次2
+        self.layer2_nowPrice = None
 
         self.smtpClient = SmtpClient()
 
@@ -42,6 +45,9 @@ class TraderBody(object):
         if refreshed is False:
             return
         return self.layer1()
+
+    def layer2(self):
+        pass
 
     def layer1(self):
         ret_5IsLt10 = self.ab.doubleEMALargerThan(df=self.db.df, from_timeperiod=self.layer1_from_timeperiod, to_timeperiod=self.layer1_to_timeperiod)
@@ -57,7 +63,9 @@ class TraderBody(object):
             self.layer1_startcount = 0
             self.layer1_startRate = 0
             self.layer1_pre_flag_5IsLt10 = True
-            nowTimeString = str(self.db.df.index.tolist()[-1])
+            lastIndex = self.db.df.index.tolist()[-1]
+            nowTimeString = str(lastIndex)
+            self.layer1_startprice = self.db.df.loc[lastIndex]['close']
             # print('duo start: ' + nowTimeString)
             # self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 多。",
             #                          content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
@@ -71,7 +79,9 @@ class TraderBody(object):
             self.layer1_startcount = 0
             self.layer1_startRate = 0
             self.layer1_pre_flag_5IsLt10 = False
-            nowTimeString = str(self.db.df.index.tolist()[-1])
+            lastIndex = self.db.df.index.tolist()[-1]
+            nowTimeString = str(lastIndex)
+            self.layer1_startprice = self.db.df.loc[lastIndex]['close']
             # print('kon start: ' + nowTimeString)
             # self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 空。",
             #                          content='请手动开仓并设置止损线。',
@@ -106,7 +116,7 @@ class TraderBody(object):
             self.layer1_ownPosition = 0
             self.layer1_startcount = 0
             self.layer1_startRate = 0
-
+            self.layer1_startprice = 0
             return 'clear'
 
         else:
@@ -133,6 +143,7 @@ class TraderBody(object):
         for nowTimeString in ts:
             if nowTimeString > self.endtime_fortest:
                 return
+            self.layer2_nowPrice = self.db.getLastestPrice(nowTimeString)
             action = self.getAction(nowTimeString)
             if action == 'duo':
                 print('[' + nowTimeString + ']: ' + str(action))
@@ -148,24 +159,41 @@ class TraderBody(object):
                                          content='如未清仓请手动操作。',
                                          receivers='jacklaiu@163.com')
             if action == 'still':
-                print('[' + nowTimeString + ']: ' + str(action))
-                pass
+                nowRate = 0
+                if self.layer1_startprice > 0 and self.layer2_nowPrice > 0:
+                    if self.layer1_ownPosition > 0:
+                        nowRate = (1 + round((self.layer2_nowPrice - self.layer1_startprice) / self.layer1_startprice, 4))
+                    else:
+                        nowRate = (1 + round((self.layer1_startprice - self.layer2_nowPrice) / self.layer1_startprice, 4))
+
+                print('[' + nowTimeString + ']: ' + str(action) + " -> " + str(nowRate))
 
     def tick(self):
         nowTimeString = util.getYMDHMS()
+        self.layer2_nowPrice = self.db.getLastestPrice(nowTimeString)
         action = self.getAction(nowTimeString)
         if action == 'duo':
             print('[' + nowTimeString + ']: ' + str(action))
-            pass
+            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 多。",
+                                     content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
         if action == 'kon':
             print('[' + nowTimeString + ']: ' + str(action))
-            pass
+            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 空。",
+                                     content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
         if action == 'clear':
             print('[' + nowTimeString + ']: ' + str(action))
-            pass
+            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 结束持仓提示。",
+                                     content='如未清仓请手动操作。',
+                                     receivers='jacklaiu@163.com')
         if action == 'still':
-            print('[' + nowTimeString + ']: ' + str(action))
-            pass
+            nowRate = 0
+            if self.layer1_startprice > 0 and self.layer2_nowPrice > 0:
+                if self.layer1_ownPosition > 0:
+                    nowRate = (1 + round((self.layer2_nowPrice - self.layer1_startprice) / self.layer1_startprice, 4))
+                else:
+                    nowRate = (1 + round((self.layer1_startprice - self.layer2_nowPrice) / self.layer1_startprice, 4))
+
+            print('[' + nowTimeString + ']: ' + str(action) + " -> " + str(nowRate))
 
 
 # ft = 5
