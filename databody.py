@@ -17,6 +17,8 @@ class DataBody(object):
         self._to0100_securies_str = "ZN"
 
     def getLastestPrice(self, nowTimeString=None):
+        if self._isNeedRefreshLastPrice(nowTimeString) is False:
+            return None
         jqdatasdk.auth('13268108673', 'king20110713')
         newDf = jqdatasdk.get_price(
             security=self.security,
@@ -117,5 +119,8 @@ class DataBody(object):
 
     def _isNeedRefresh(self, nowTimeString):
         return util.isFutureTradingTime(nowTimeString) and self._isFixFrenqucy(nowTimeString) and self._isTradeTime(nowTimeString)
+
+    def _isNeedRefreshLastPrice(self, nowTimeString):
+        return util.isFutureTradingTime(nowTimeString) and self._isTradeTime(nowTimeString)
 
 

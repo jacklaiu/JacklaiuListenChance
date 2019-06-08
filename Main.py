@@ -16,5 +16,5 @@ trader = TraderBody(security='RB8888.XSGE', frequency='17m',
                     )
 while True:
     trader.tick()
-    time.sleep(6)
+    time.sleep(50)
     print('[' + util.getYMDHMS() + ']: tick...')
