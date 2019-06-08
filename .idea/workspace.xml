@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="39cbb46b-2606-4caa-b2b1-85bc9e906aca" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/JacklaiuListenChance.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/JacklaiuListenChance.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/databody.py" beforeDir="false" afterPath="$PROJECT_DIR$/databody.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/traderbody.py" beforeDir="false" afterPath="$PROJECT_DIR$/traderbody.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,7 +13,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/JacklaiuListenChance$analysisbody.coverage" NAME="analysisbody Coverage Results" MODIFIED="1558790667006" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/JacklaiuListenChance$traderbody.coverage" NAME="traderbody Coverage Results" MODIFIED="1559928382855" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/JacklaiuListenChance$traderbody.coverage" NAME="traderbody Coverage Results" MODIFIED="1559975516151" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JacklaiuListenChance$databody.coverage" NAME="databody Coverage Results" MODIFIED="1558881660148" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JacklaiuListenChance$smtpclient.coverage" NAME="smtpclient Coverage Results" MODIFIED="1559396525060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
     <SUITE FILE_PATH="coverage/JacklaiuListenChance$Main.coverage" NAME="Main Coverage Results" MODIFIED="1559752834857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -98,8 +94,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/traderbody.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="217" column="17" selection-start-line="217" selection-start-column="17" selection-end-line="217" selection-end-column="17" />
+            <state relative-caret-position="102">
+              <caret line="211" column="22" selection-start-line="211" selection-start-column="22" selection-end-line="211" selection-end-column="22" />
               <folding>
                 <element signature="e#1#17#0" expanded="true" />
               </folding>
@@ -140,6 +136,10 @@
       <find>rates_markAtHandleAction</find>
       <find>maxRate -</find>
       <find>self.layer2_maxRate =</find>
+      <find>######</find>
+      <find>0.05</find>
+      <find>##################</find>
+      <find>04-04</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -161,8 +161,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="567" />
-    <option name="y" value="-8" />
+    <option name="x" value="316" />
+    <option name="y" value="-14" />
     <option name="width" value="698" />
     <option name="height" value="829" />
   </component>
@@ -379,7 +379,7 @@
       <workItem from="1559848206760" duration="23492000" />
       <workItem from="1559927238313" duration="2571000" />
       <workItem from="1559959669832" duration="606000" />
-      <workItem from="1559961248437" duration="1916000" />
+      <workItem from="1559961248437" duration="10507000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <created>1559751490477</created>
@@ -416,11 +416,18 @@
       <option name="project" value="LOCAL" />
       <updated>1559848591674</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="commit">
+      <created>1559963347083</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1559963347083</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="125329000" />
+    <option name="totallyTimeSpent" value="133920000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -448,9 +455,9 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.329718" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.39605543" side_tool="true" weight="0.40238613" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.38136512" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.40238613" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="12" sideWeight="0.60394454" visible="true" weight="0.40238613" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -516,22 +523,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/traderbody.py</url>
-          <line>154</line>
+          <line>156</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/traderbody.py</url>
-          <line>158</line>
+          <line>160</line>
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/traderbody.py</url>
-          <line>173</line>
+          <line>175</line>
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/traderbody.py</url>
-          <line>164</line>
+          <line>166</line>
           <option name="timeStamp" value="71" />
         </line-breakpoint>
       </breakpoints>
@@ -611,8 +618,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/traderbody.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="217" column="17" selection-start-line="217" selection-start-column="17" selection-end-line="217" selection-end-column="17" />
+        <state relative-caret-position="102">
+          <caret line="211" column="22" selection-start-line="211" selection-start-column="22" selection-end-line="211" selection-end-column="22" />
           <folding>
             <element signature="e#1#17#0" expanded="true" />
           </folding>

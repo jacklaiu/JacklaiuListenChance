@@ -12,7 +12,7 @@ class TraderBody(object):
 
     def __init__(self, security, frequency, starttime_fortest=None, endtime_fortest=util.getYMDHMS(),
                  layer1_from_timeperiod=5, layer1_to_timeperiod=10,
-                 layer1_rsi_top=65, layer1_rsi_bottom=35, layer1_rsi_timeperiod=9):
+                 layer1_rsi_top=65, layer1_rsi_bottom=35, layer1_rsi_timeperiod=9, layer2_stoprate=0.01):
         self.security = security
         self.frequency = frequency
         self.db = DataBody(security, frequency)
@@ -22,6 +22,7 @@ class TraderBody(object):
         self.endtime_fortest = endtime_fortest
         self.rates_markAtHandleAction = []
         self.actions_markAtHandleAction = ['']
+
         # 策略层次1
         self.layer1_from_timeperiod = layer1_from_timeperiod
         self.layer1_to_timeperiod = layer1_to_timeperiod
@@ -38,6 +39,7 @@ class TraderBody(object):
         self.layer1_starttime_rate_map = {}
         self.layer1_action = None
         # 策略层次2
+        self.layer2_stoprate = layer2_stoprate
         self.layer2_nowPrice = None
         self.layer2_maxRate = 0
         self.layer2_nowRate = 0
@@ -72,7 +74,7 @@ class TraderBody(object):
                 self.layer2_maxRate) + " | distance - " + str(self.layer2_maxRate - self.layer2_nowRate))
             # 排除这波已经发出stop的情况，避免重复stop
             preAction = self.actions_markAtHandleAction[-1]
-            if preAction != 'clear' and preAction != 'stop' and (self.layer2_maxRate - self.layer2_nowRate) > 0.01:
+            if preAction != 'clear' and preAction != 'stop' and (self.layer2_maxRate - self.layer2_nowRate) > self.layer2_stoprate:
                 self.layer2_action = 'stop'
 
     def layer1(self, nowTimeString=None):
@@ -194,7 +196,7 @@ class TraderBody(object):
         now = util.getYMDHMS()
         for nowTimeString in ts:
             self.tick(nowTimeString)
-            if nowTimeString > now:
+            if nowTimeString > now or nowTimeString > self.endtime_fortest:
                 return
 
     def tick(self, nowTimeString=util.getYMDHMS()):
@@ -202,20 +204,25 @@ class TraderBody(object):
         self.layer2(nowTimeString)
         self.handleAction(nowTimeString)
 
-
 ft = 5
 tt = 10
 rt = 65
 rb = 35
 rtp = 9
-trader = TraderBody(security='RB8888.XSGE', frequency='16m', starttime_fortest='2019-05-10 22:00:00',
+layer2_stoprate = 0.005
+trader = TraderBody(security='RB8888.XSGE', frequency='16m',
+                    starttime_fortest='2019-03-28 22:00:00',
+                    endtime_fortest='2019-04-09 22:00:00',
                     layer1_from_timeperiod=ft, layer1_to_timeperiod=tt,
-                    layer1_rsi_top=rt, layer1_rsi_bottom=rb, layer1_rsi_timeperiod=rtp)
+                    layer1_rsi_top=rt, layer1_rsi_bottom=rb, layer1_rsi_timeperiod=rtp,
+                    layer2_stoprate=layer2_stoprate)
 trader.testMain()
 total_rate = 1
 for r in trader.rates_markAtHandleAction:
     total_rate = total_rate * r
 print(total_rate)
+
+print("layer2_stoprate: " + str(layer2_stoprate))
 
 # items = sorted(trader.layer1_starttime_rate_map.items(), key=lambda x: x[1], reverse=True)
 # for item in items:
