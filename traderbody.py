@@ -12,7 +12,7 @@ class TraderBody(object):
 
     def __init__(self, security, frequency, starttime_fortest=None, endtime_fortest=util.getYMDHMS(),
                  layer1_from_timeperiod=5, layer1_to_timeperiod=10,
-                 layer1_rsi_top=65, layer1_rsi_bottom=35, layer1_rsi_timeperiod=9, layer2_stoprate=0.01):
+                 layer1_rsi_top=65, layer1_rsi_bottom=35, layer1_rsi_timeperiod=9, layer2_stoprate=0.01, layer2_fromstartrate=0.995):
         self.security = security
         self.frequency = frequency
         self.db = DataBody(security, frequency)
@@ -40,6 +40,7 @@ class TraderBody(object):
         self.layer1_action = None
         # 策略层次2
         self.layer2_stoprate = layer2_stoprate
+        self.layer2_fromstartrate = layer2_fromstartrate
         self.layer2_nowPrice = None
         self.layer2_maxRate = 0
         self.layer2_nowRate = 0
@@ -74,8 +75,10 @@ class TraderBody(object):
                 self.layer2_maxRate) + " | distance - " + str(self.layer2_maxRate - self.layer2_nowRate))
             # 排除这波已经发出stop的情况，避免重复stop
             preAction = self.actions_markAtHandleAction[-1]
-            if preAction != 'clear' and preAction != 'stop' and (self.layer2_maxRate - self.layer2_nowRate) > self.layer2_stoprate:
-                self.layer2_action = 'stop'
+            if preAction != 'clear' and preAction != 'stop':
+                if (self.layer2_maxRate - self.layer2_nowRate) > self.layer2_stoprate or \
+                        self.layer2_nowRate < self.layer2_fromstartrate:
+                    self.layer2_action = 'stop'
 
     def layer1(self, nowTimeString=None):
         refreshed = self.db.refresh(nowTimeString)
@@ -209,13 +212,19 @@ tt = 10
 rt = 65
 rb = 35
 rtp = 9
-layer2_stoprate = 0.005
+layer2_stoprate = 0.05
+layer2_fromstartrate = 0.95
 trader = TraderBody(security='RB8888.XSGE', frequency='16m',
-                    starttime_fortest='2019-03-28 22:00:00',
-                    endtime_fortest='2019-04-09 22:00:00',
+                    # 恶劣段
+                    starttime_fortest='2019-05-22 09:00:00',
+                    endtime_fortest='2019-05-28 22:00:00',
+                    # 优良段
+                    # starttime_fortest='2019-05-14 09:00:00',
+                    # endtime_fortest='2019-05-21 23:00:00',
                     layer1_from_timeperiod=ft, layer1_to_timeperiod=tt,
                     layer1_rsi_top=rt, layer1_rsi_bottom=rb, layer1_rsi_timeperiod=rtp,
-                    layer2_stoprate=layer2_stoprate)
+                    layer2_stoprate=layer2_stoprate,
+                    layer2_fromstartrate=layer2_fromstartrate)
 trader.testMain()
 total_rate = 1
 for r in trader.rates_markAtHandleAction:
@@ -223,6 +232,7 @@ for r in trader.rates_markAtHandleAction:
 print(total_rate)
 
 print("layer2_stoprate: " + str(layer2_stoprate))
+print("layer2_fromstartrate: " + str(layer2_fromstartrate))
 
 # items = sorted(trader.layer1_starttime_rate_map.items(), key=lambda x: x[1], reverse=True)
 # for item in items:

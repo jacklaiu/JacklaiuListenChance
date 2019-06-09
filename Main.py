@@ -12,7 +12,9 @@ trader = TraderBody(security='RB8888.XSGE', frequency='17m',
                     layer1_to_timeperiod=tt,
                     layer1_rsi_top=rt,
                     layer1_rsi_bottom=rb,
-                    layer1_rsi_timeperiod=rtp
+                    layer1_rsi_timeperiod=rtp,
+                    layer2_stoprate=0.05,
+                    layer2_fromstartrate=0.95
                     )
 while True:
     trader.tick()

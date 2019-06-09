@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="39cbb46b-2606-4caa-b2b1-85bc9e906aca" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/traderbody.py" beforeDir="false" afterPath="$PROJECT_DIR$/traderbody.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,11 +44,11 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+            <state relative-caret-position="390">
+              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
@@ -58,7 +59,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/runable.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
+            <state relative-caret-position="366">
               <caret line="19" selection-start-line="19" selection-end-line="19" />
               <folding>
                 <element signature="e#1#17#0" expanded="true" />
@@ -91,11 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/traderbody.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="211" column="22" selection-start-line="211" selection-start-column="22" selection-end-line="211" selection-end-column="22" />
+            <state relative-caret-position="398">
+              <caret line="228" column="14" lean-forward="true" selection-start-line="228" selection-start-column="14" selection-end-line="228" selection-end-column="14" />
               <folding>
                 <element signature="e#1#17#0" expanded="true" />
               </folding>
@@ -132,7 +133,6 @@
       <find>#############rates_markAtHandleAction</find>
       <find>###################rates_markAtHandleAction</find>
       <find>#####</find>
-      <find>###</find>
       <find>rates_markAtHandleAction</find>
       <find>maxRate -</find>
       <find>self.layer2_maxRate =</find>
@@ -140,6 +140,8 @@
       <find>0.05</find>
       <find>##################</find>
       <find>04-04</find>
+      <find>###</find>
+      <find>中途结束持仓提示</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -155,14 +157,14 @@
         <option value="$PROJECT_DIR$/analysisbody.py" />
         <option value="$PROJECT_DIR$/util/smtpclient.py" />
         <option value="$PROJECT_DIR$/databody.py" />
-        <option value="$PROJECT_DIR$/Main.py" />
         <option value="$PROJECT_DIR$/traderbody.py" />
+        <option value="$PROJECT_DIR$/Main.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="316" />
-    <option name="y" value="-14" />
+    <option name="x" value="685" />
+    <option name="y" value="150" />
     <option name="width" value="698" />
     <option name="height" value="829" />
   </component>
@@ -379,7 +381,7 @@
       <workItem from="1559848206760" duration="23492000" />
       <workItem from="1559927238313" duration="2571000" />
       <workItem from="1559959669832" duration="606000" />
-      <workItem from="1559961248437" duration="10507000" />
+      <workItem from="1559961248437" duration="15619000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <created>1559751490477</created>
@@ -423,11 +425,18 @@
       <option name="project" value="LOCAL" />
       <updated>1559963347083</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="commit">
+      <created>1559979456247</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1559979456247</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="133920000" />
+    <option name="totallyTimeSpent" value="139032000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -440,7 +449,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1433902" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -457,12 +465,12 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.39605543" side_tool="true" weight="0.40238613" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.38136512" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="12" sideWeight="0.60394454" visible="true" weight="0.40238613" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="12" sideWeight="0.60394454" visible="true" weight="0.37635574" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" sideWeight="0.47731397" visible="true" weight="0.21055438" />
-      <window_info anchor="right" x="0" y="0" width="310" height="613" id="Documentation" order="4" sideWeight="0.522686" side_tool="true" visible="true" weight="0.21055438" />
+      <window_info anchor="right" id="SciView" order="3" sideWeight="0.47652173" visible="true" weight="0.21055438" />
+      <window_info anchor="right" x="0" y="0" width="310" height="613" id="Documentation" order="4" sideWeight="0.52347827" side_tool="true" visible="true" weight="0.21055438" />
       <window_info anchor="right" id="Database" order="5" />
     </layout>
   </component>
@@ -523,22 +531,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/traderbody.py</url>
-          <line>156</line>
+          <line>159</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/traderbody.py</url>
-          <line>160</line>
+          <line>163</line>
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/traderbody.py</url>
-          <line>175</line>
+          <line>178</line>
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/traderbody.py</url>
-          <line>166</line>
+          <line>169</line>
           <option name="timeStamp" value="71" />
         </line-breakpoint>
       </breakpoints>
@@ -569,26 +577,6 @@
     <entry file="file://$PROJECT_DIR$/util/dataviewer.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runable.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-          <folding>
-            <element signature="e#1#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/databody.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="660">
@@ -616,12 +604,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/traderbody.py">
+    <entry file="file://$PROJECT_DIR$/runable.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="211" column="22" selection-start-line="211" selection-start-column="22" selection-end-line="211" selection-end-column="22" />
+        <state relative-caret-position="366">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="e#1#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/traderbody.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="398">
+          <caret line="228" column="14" lean-forward="true" selection-start-line="228" selection-start-column="14" selection-end-line="228" selection-end-column="14" />
+          <folding>
+            <element signature="e#1#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
           </folding>
         </state>
       </provider>
