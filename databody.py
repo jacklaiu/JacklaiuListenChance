@@ -13,11 +13,11 @@ class DataBody(object):
         self.frequency = frequency
         self.jqAc = jqAc
         self.jqPw = jqPw
-        self._lastaccesstimestampObj = {'lastaccesstimestamp': None}
+        self._lastaccesstimestampObj = {'lastaccesstimestamp': None, 'lastaccesstimestamp_cus': None}
         self._to0100_securies_str = "ZN"
 
-    def getLastestPrice(self, nowTimeString=None):
-        if self._isNeedRefreshLastPrice(nowTimeString) is False:
+    def getLastestPrice(self, nowTimeString=None, frequency='5m'):
+        if self._isNeedRefreshLastPrice(nowTimeString, frequency) is False:
             return None
         jqdatasdk.auth('13268108673', 'king20110713')
         newDf = jqdatasdk.get_price(
@@ -111,16 +111,33 @@ class DataBody(object):
         lastaccesstimestamp = self._lastaccesstimestampObj['lastaccesstimestamp']
         if lastaccesstimestamp is None:
             self._lastaccesstimestampObj['lastaccesstimestamp'] = ts
-        if lastaccesstimestamp is None or (ts - lastaccesstimestamp) > (int(self.frequency[0:-1]) * 58):
+            return True
+        elif lastaccesstimestamp is None or (ts - lastaccesstimestamp) > (int(self.frequency[0:-1]) * 58):
             self._lastaccesstimestampObj['lastaccesstimestamp'] = ts
             return True
         else:
             return False
 
-    def _isNeedRefresh(self, nowTimeString):
-        return util.isFutureTradingTime(nowTimeString) and self._isFixFrenqucy(nowTimeString) and self._isTradeTime(nowTimeString)
+    def _isFixCustomFrenqucy(self, nowTimeString, frequency):
+        ts = util.string2timestamp(str(nowTimeString))
+        lastaccesstimestamp = self._lastaccesstimestampObj['lastaccesstimestamp_cus']
+        if lastaccesstimestamp is None:
+            self._lastaccesstimestampObj['lastaccesstimestamp_cus'] = ts
+            return True
+        elif lastaccesstimestamp is None or (ts - lastaccesstimestamp) > (int(frequency[0:-1]) * 58):
+            self._lastaccesstimestampObj['lastaccesstimestamp_cus'] = ts
+            return True
+        else:
+            return False
 
-    def _isNeedRefreshLastPrice(self, nowTimeString):
-        return util.isFutureTradingTime(nowTimeString) and self._isTradeTime(nowTimeString)
+    def _isNeedRefresh(self, nowTimeString):
+        return self._isFixFrenqucy(nowTimeString) and \
+               util.isFutureTradingTime(nowTimeString) and \
+               self._isTradeTime(nowTimeString)
+
+    def _isNeedRefreshLastPrice(self, nowTimeString, frequency):
+        return self._isFixCustomFrenqucy(nowTimeString, frequency) and \
+               util.isFutureTradingTime(nowTimeString) and \
+               self._isTradeTime(nowTimeString)
 
 

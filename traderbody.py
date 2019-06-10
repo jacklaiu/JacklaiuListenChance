@@ -12,7 +12,8 @@ class TraderBody(object):
 
     def __init__(self, security, frequency, starttime_fortest=None, endtime_fortest=util.getYMDHMS(),
                  layer1_from_timeperiod=5, layer1_to_timeperiod=10,
-                 layer1_rsi_top=65, layer1_rsi_bottom=35, layer1_rsi_timeperiod=9, layer2_stoprate=0.01, layer2_fromstartrate=0.995):
+                 layer1_rsi_top=65, layer1_rsi_bottom=35, layer1_rsi_timeperiod=9, layer2_stoprate=0.01, layer2_fromstartrate=0.995,
+                 layer2_getLastestPrice_frequency='5m'):
         self.security = security
         self.frequency = frequency
         self.db = DataBody(security, frequency)
@@ -45,13 +46,14 @@ class TraderBody(object):
         self.layer2_maxRate = 0
         self.layer2_nowRate = 0
         self.layer2_action = None
+        self.layer2_getLastestPrice_frequency = '5m'
 
         self.smtpClient = SmtpClient()
 
     # return: buy - sell ||| short - cover
     def layer2(self, nowTimeString):
         if self.layer1_startprice > 0:
-            self.layer2_nowPrice = self.db.getLastestPrice(nowTimeString)
+            self.layer2_nowPrice = self.db.getLastestPrice(nowTimeString, self.layer2_getLastestPrice_frequency)
         # 已收市@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if self.layer2_nowPrice is None:
             self.layer2_nowRate = None
@@ -61,7 +63,6 @@ class TraderBody(object):
                 self.layer2_nowRate = (1 + round((self.layer2_nowPrice - self.layer1_startprice) / self.layer1_startprice, 4))
             else:
                 self.layer2_nowRate = (1 + round((self.layer1_startprice - self.layer2_nowPrice) / self.layer1_startprice, 4))
-
         # 记录最近最大rate
         if self.layer2_nowRate is not None and self.layer2_nowRate > 0:
             if self.layer2_maxRate is None or self.layer2_maxRate == 0 and self.layer1_action != 'clear':
@@ -88,33 +89,54 @@ class TraderBody(object):
         flag_5IsLt10 = ret_5IsLt10['ret']
         ret_rsi9_active = self.ab.rsiIsBetween(df=self.db.df, top=self.layer1_rsi_top, bottom=self.layer1_rsi_bottom, timeperiod=self.layer1_rsi_timeperiod)
         flag_rsi9_active = ret_rsi9_active['ret'] is not True
+        print(nowTimeString + " ###########flag_5IsLt10: " + str(flag_5IsLt10) +
+              " rsi: " + str(ret_rsi9_active['val']) +
+              ' self.layer1_ownPosition: ' + str(self.layer1_ownPosition))
+
         if flag_5IsLt10 is True and flag_rsi9_active is True and str(self.layer1_ownPosition) == '0':
+            self.layer1_action = 'duo'
+
+        elif flag_5IsLt10 is False and flag_rsi9_active is True and str(self.layer1_ownPosition) == '0':
+            self.layer1_action = 'kon'
+
+        elif str(self.layer1_ownPosition) != '0' and self.layer1_pre_flag_5IsLt10 != flag_5IsLt10:
+            self.layer1_action = 'clear'
+
+        else:
+            self.layer1_action = 'still'
+
+        self.layer1_pre_flag_5IsLt10 = flag_5IsLt10
+
+    def handleAction(self, nowTimeString):
+        # layer1 动作处理 #################################################
+        preAction = self.actions_markAtHandleAction[-1]
+        if self.layer1_action == 'duo':
             # mark pre
             self.layer1_pre1_ownerPosition = self.layer1_ownPosition
             # change posi
             self.layer1_ownPosition = 1
             self.layer1_startcount = 0
             self.layer1_startRate = 0
-            self.layer1_pre_flag_5IsLt10 = True
             lastIndex = self.db.df.index.tolist()[-1]
             self.layer1_startprice = self.db.df.loc[lastIndex]['close']
-
-            self.layer1_action = 'duo'
-
-        elif flag_5IsLt10 is False and flag_rsi9_active is True and str(self.layer1_ownPosition) == '0':
+            ########################################################################################################
+            print('Action duo [' + nowTimeString + ']: ' + str(self.layer1_action))
+            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 多。",
+                                     content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
+        elif self.layer1_action == 'kon':
             # mark pre
             self.layer1_pre1_ownerPosition = self.layer1_ownPosition
             # change posi
             self.layer1_ownPosition = -1
             self.layer1_startcount = 0
             self.layer1_startRate = 0
-            self.layer1_pre_flag_5IsLt10 = False
             lastIndex = self.db.df.index.tolist()[-1]
             self.layer1_startprice = self.db.df.loc[lastIndex]['close']
-
-            self.layer1_action = 'kon'
-
-        elif str(self.layer1_ownPosition) != '0' and self.layer1_pre_flag_5IsLt10 != flag_5IsLt10:
+            ########################################################################################################
+            print('Action kon [' + nowTimeString + ']: ' + str(self.layer1_action))
+            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 空。",
+                                     content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
+        elif self.layer1_action == 'clear':
             self.layer1_startcount = self.layer1_startcount + 1
             startDf = self.db.df[-self.layer1_startcount - 1:-self.layer1_startcount]
             closeDf = self.db.df[-1:]
@@ -129,38 +151,7 @@ class TraderBody(object):
             self.layer1_starttime_rate_map[nowTimeString] = self.layer1_startRate
             # mark pre
             self.layer1_pre1_ownerPosition = self.layer1_ownPosition
-            # change posi
-            self.layer1_ownPosition = 0
-            self.layer1_startcount = 0
-            self.layer1_startRate = 0
-            self.layer1_startprice = 0
-            self.layer2_maxRate = 0
-            # self.layer2_nowRate = 0
-            self.layer2_nowPrice = 0
-
-            self.layer1_action = 'clear'
-
-        else:
-            self.layer1_startcount = self.layer1_startcount + 1
-            # startDf = self.db.df[-self.layer1_startcount-1:-self.layer1_startcount]
-            # closeDf = self.db.df[-1:]
-            # startClose = startDf.iloc[0]['close']
-            # endClose = closeDf.iloc[0]['close']
-            # self.layer1_startRate = (1 + round((endClose - startClose)/startClose, 4))
-            self.layer1_action = 'still'
-
-    def handleAction(self, nowTimeString):
-        # layer1 动作处理 #################################################
-        preAction = self.actions_markAtHandleAction[-1]
-        if self.layer1_action == 'duo':
-            print('Action duo [' + nowTimeString + ']: ' + str(self.layer1_action))
-            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 多。",
-                                     content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
-        elif self.layer1_action == 'kon':
-            print('Action kon [' + nowTimeString + ']: ' + str(self.layer1_action))
-            self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 空。",
-                                     content='请手动开仓并设置止损线。', receivers='jacklaiu@163.com')
-        elif self.layer1_action == 'clear':
+            ########################################################################################################
             print('Action clear [' + nowTimeString + ']: ' + str(self.layer1_action))
             self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 结束持仓提示。",
                                      content='如未清仓请手动操作。',
@@ -170,9 +161,17 @@ class TraderBody(object):
                 self.rates_markAtHandleAction.append(self.layer2_nowRate)
                 self.layer2_nowRate = 0
             print('###################rates_markAtHandleAction: ' + str(self.rates_markAtHandleAction))
+            # change posi
+            self.layer1_ownPosition = 0
+            self.layer1_startcount = 0
+            self.layer1_startRate = 0
+            self.layer1_startprice = 0
+            self.layer2_maxRate = 0
+            # self.layer2_nowRate = 0
+            self.layer2_nowPrice = 0
 
         elif self.layer1_action == 'still':
-            pass
+            self.layer1_startcount = self.layer1_startcount + 1
 
         # layer2 动作处理 #################################################
         elif self.layer2_action == 'stop':
@@ -212,19 +211,17 @@ tt = 10
 rt = 65
 rb = 35
 rtp = 9
-layer2_stoprate = 0.05
-layer2_fromstartrate = 0.95
-trader = TraderBody(security='RB8888.XSGE', frequency='16m',
-                    # 恶劣段
-                    starttime_fortest='2019-05-22 09:00:00',
+layer2_stoprate = 0.01
+layer2_fromstartrate = 0.99
+layer2_getLastestPrice_frequency = '10m'
+trader = TraderBody(security='RB8888.XSGE', frequency='58m',
+                    starttime_fortest='2019-02-12 09:00:00',
                     endtime_fortest='2019-05-28 22:00:00',
-                    # 优良段
-                    # starttime_fortest='2019-05-14 09:00:00',
-                    # endtime_fortest='2019-05-21 23:00:00',
                     layer1_from_timeperiod=ft, layer1_to_timeperiod=tt,
                     layer1_rsi_top=rt, layer1_rsi_bottom=rb, layer1_rsi_timeperiod=rtp,
                     layer2_stoprate=layer2_stoprate,
-                    layer2_fromstartrate=layer2_fromstartrate)
+                    layer2_fromstartrate=layer2_fromstartrate,
+                    layer2_getLastestPrice_frequency=layer2_getLastestPrice_frequency)
 trader.testMain()
 total_rate = 1
 for r in trader.rates_markAtHandleAction:
