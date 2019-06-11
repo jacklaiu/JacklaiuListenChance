@@ -46,14 +46,17 @@ class TraderBody(object):
         self.layer2_maxRate = 0
         self.layer2_nowRate = 0
         self.layer2_action = None
-        self.layer2_getLastestPrice_frequency = '5m'
+        self.layer2_getLastestPrice_frequency = layer2_getLastestPrice_frequency
 
         self.smtpClient = SmtpClient()
 
     # return: buy - sell ||| short - cover
     def layer2(self, nowTimeString):
         if self.layer1_startprice > 0:
-            self.layer2_nowPrice = self.db.getLastestPrice(nowTimeString, self.layer2_getLastestPrice_frequency)
+            self.layer2_nowPrice = \
+                self.db.getLastestPriceWithFrequency(nowTimeString, frequency=self.layer2_getLastestPrice_frequency)
+        # if self.layer1_action is not None and self.layer1_action != '':
+        #     self.layer2_nowPrice = self.db.getLastestPrice(nowTimeString)
         # 已收市@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if self.layer2_nowPrice is None:
             self.layer2_nowRate = None
@@ -89,6 +92,8 @@ class TraderBody(object):
         flag_5IsLt10 = ret_5IsLt10['ret']
         ret_rsi9_active = self.ab.rsiIsBetween(df=self.db.df, top=self.layer1_rsi_top, bottom=self.layer1_rsi_bottom, timeperiod=self.layer1_rsi_timeperiod)
         flag_rsi9_active = ret_rsi9_active['ret'] is not True
+        if str(nowTimeString) > '2019-05-10 21:37:46':
+            print("123123123")
         print(nowTimeString + " ###########flag_5IsLt10: " + str(flag_5IsLt10) +
               " rsi: " + str(ret_rsi9_active['val']) +
               ' self.layer1_ownPosition: ' + str(self.layer1_ownPosition))
@@ -158,7 +163,7 @@ class TraderBody(object):
                                      receivers='jacklaiu@163.com')
             # 如果这波交易已经stop了就不要在记录多一次了
             if preAction != 'stop':
-                self.rates_markAtHandleAction.append(self.layer2_nowRate)
+                self.rates_markAtHandleAction.append(self.layer1_startRate)
                 self.layer2_nowRate = 0
             print('###################rates_markAtHandleAction: ' + str(self.rates_markAtHandleAction))
             # change posi
@@ -208,17 +213,20 @@ class TraderBody(object):
 
 ft = 5
 tt = 10
-rt = 65
-rb = 35
+rt = 50
+rb = 50
 rtp = 9
-layer2_stoprate = 0.01
+layer2_stoprate = 0.05
 layer2_fromstartrate = 0.99
 layer2_getLastestPrice_frequency = '10m'
-trader = TraderBody(security='RB8888.XSGE', frequency='58m',
+trader = TraderBody(security='RB8888.XSGE', frequency='28m',
                     starttime_fortest='2019-02-12 09:00:00',
                     endtime_fortest='2019-05-28 22:00:00',
-                    layer1_from_timeperiod=ft, layer1_to_timeperiod=tt,
-                    layer1_rsi_top=rt, layer1_rsi_bottom=rb, layer1_rsi_timeperiod=rtp,
+                    layer1_from_timeperiod=ft,
+                    layer1_to_timeperiod=tt,
+                    layer1_rsi_top=rt,
+                    layer1_rsi_bottom=rb,
+                    layer1_rsi_timeperiod=rtp,
                     layer2_stoprate=layer2_stoprate,
                     layer2_fromstartrate=layer2_fromstartrate,
                     layer2_getLastestPrice_frequency=layer2_getLastestPrice_frequency)
