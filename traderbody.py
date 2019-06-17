@@ -75,8 +75,8 @@ class TraderBody(object):
                     self.layer2_maxRate = self.layer2_nowRate
 
         if self.layer2_nowRate is not None and self.layer2_nowRate > 0:
-            print("[" + nowTimeString + "]: nowRate - " + str(self.layer2_nowRate) + " | maxRate - " + str(
-                self.layer2_maxRate) + " | distance - " + str(self.layer2_maxRate - self.layer2_nowRate))
+            # print("[" + nowTimeString + "]: nowRate - " + str(self.layer2_nowRate) + " | maxRate - " + str(
+            #     self.layer2_maxRate) + " | distance - " + str(self.layer2_maxRate - self.layer2_nowRate))
             # 排除这波已经发出stop的情况，避免重复stop
             preAction = self.actions_markAtHandleAction[-1]
             if preAction != 'clear' and preAction != 'stop':
@@ -92,11 +92,9 @@ class TraderBody(object):
         flag_5IsLt10 = ret_5IsLt10['ret']
         ret_rsi9_active = self.ab.rsiIsBetween(df=self.db.df, top=self.layer1_rsi_top, bottom=self.layer1_rsi_bottom, timeperiod=self.layer1_rsi_timeperiod)
         flag_rsi9_active = ret_rsi9_active['ret'] is not True
-        if str(nowTimeString) > '2019-05-10 21:37:46':
-            print("123123123")
-        print(nowTimeString + " ###########flag_5IsLt10: " + str(flag_5IsLt10) +
-              " rsi: " + str(ret_rsi9_active['val']) +
-              ' self.layer1_ownPosition: ' + str(self.layer1_ownPosition))
+        # print(nowTimeString + " ###########flag_5IsLt10: " + str(flag_5IsLt10) +
+        #       " rsi: " + str(ret_rsi9_active['val']) +
+        #       ' self.layer1_ownPosition: ' + str(self.layer1_ownPosition))
 
         if flag_5IsLt10 is True and flag_rsi9_active is True and str(self.layer1_ownPosition) == '0':
             self.layer1_action = 'duo'
@@ -180,7 +178,7 @@ class TraderBody(object):
 
         # layer2 动作处理 #################################################
         elif self.layer2_action == 'stop':
-            print('Action stop [' + nowTimeString + ']: ' + str(self.layer1_action))
+            print('Action stop [' + nowTimeString + ']: ' + str(self.layer2_action))
             self.smtpClient.sendMail(subject="[" + self.frequency + "]" + self.security + ": 中途结束持仓提示。",
                                      content='如未清仓请手动操作。',
                                      receivers='jacklaiu@163.com')
@@ -211,17 +209,17 @@ class TraderBody(object):
         self.layer2(nowTimeString)
         self.handleAction(nowTimeString)
 
-ft = 5
-tt = 10
+ft = 6
+tt = 23
 rt = 50
 rb = 50
 rtp = 9
-layer2_stoprate = 0.05
+layer2_stoprate = 0.01
 layer2_fromstartrate = 0.99
-layer2_getLastestPrice_frequency = '10m'
-trader = TraderBody(security='RB8888.XSGE', frequency='28m',
-                    starttime_fortest='2019-02-12 09:00:00',
-                    endtime_fortest='2019-05-28 22:00:00',
+layer2_getLastestPrice_frequency = '5m'
+trader = TraderBody(security='RB8888.XSGE', frequency='58m',
+                    starttime_fortest='2019-01-12 09:00:00',
+                    endtime_fortest='2019-06-13 22:00:00',
                     layer1_from_timeperiod=ft,
                     layer1_to_timeperiod=tt,
                     layer1_rsi_top=rt,
@@ -230,14 +228,25 @@ trader = TraderBody(security='RB8888.XSGE', frequency='28m',
                     layer2_stoprate=layer2_stoprate,
                     layer2_fromstartrate=layer2_fromstartrate,
                     layer2_getLastestPrice_frequency=layer2_getLastestPrice_frequency)
+
 trader.testMain()
 total_rate = 1
 for r in trader.rates_markAtHandleAction:
     total_rate = total_rate * r
 print(total_rate)
+print(ft)
+print(tt)
+print(rt)
+print(rb)
+print(layer2_stoprate)
+print(layer2_fromstartrate)
+print("trader.rates_markAtHandleAction: " + str(sorted(trader.rates_markAtHandleAction)))
 
-print("layer2_stoprate: " + str(layer2_stoprate))
-print("layer2_fromstartrate: " + str(layer2_fromstartrate))
+
+# total_rate = 1
+# for r in [0.9916, 0.9963, 1.0337, 0.9849, 0.9865, 1.0216, 1.0087, 0.9971, 0.9978, 1.0117, 0.9935, 0.993, 0.9955, 0.9947, 0.9942, 0.9943, 1.028, 1.0136, 1.0206, 0.9938, 0.9922, 0.9833, 0.9899, 1.0391]:
+#     total_rate = total_rate * r
+# print(total_rate)
 
 # items = sorted(trader.layer1_starttime_rate_map.items(), key=lambda x: x[1], reverse=True)
 # for item in items:
