@@ -7,6 +7,7 @@ from util.smtpclient import SmtpClient
 
 smtpClient = SmtpClient()
 
+
 def check(securitys, frequencys, nowTimeString=tools.getYMDHMS()):
     strArray = []
     jqdatasdk.auth('13268108673', 'king20110713')
@@ -66,23 +67,7 @@ def getPricePosiArrayDur(df):
     return count
 
 
-while True:
-    nowTimeString = tools.getYMDHMS()
-    if tools.isFutureTradingTime(nowTimeString) is False or tools.isOpen(nowTimeString) is False:
-        time.sleep(61)
-        continue
-    hms = tools.getHMS()
-    tick = False
-    if "08:00:00" < hms < "08:01:00":
-        tick = True
-    elif "12:00:00" < hms < "12:01:00":
-        tick = True
-    elif "20:00:00" < hms < "20:31:00":
-        tick = True
-    if tick is False:
-        time.sleep(50)
-        continue
-    time.sleep(61)
+def action(nowTimeString):
     strArray = check([
         'RB9999.XSGE',
         'BU9999.XSGE',
@@ -142,4 +127,31 @@ while True:
             rowStr = "正在搜寻机会..."
 
     print(rowStr)
-    smtpClient.sendMail(subject="机会报告", content=rowStr)
+    smtpClient.sendMail(subject="[" + nowTimeString + "]: 机会报告", content=rowStr)
+
+
+def startListen():
+    while True:
+        nowTimeString = tools.getYMDHMS()
+        if tools.isFutureTradingTime(nowTimeString) is False or tools.isOpen(nowTimeString) is False:
+            time.sleep(61)
+            continue
+        hms = tools.getHMS()
+        tick = False
+        if "10:00:00" < hms < "10:01:00":
+            tick = True
+        elif "14:00:00" < hms < "14:01:00":
+            tick = True
+        elif "22:00:00" < hms < "22:01:00":
+            tick = True
+        if tick is False:
+            time.sleep(50)
+            print("[" + nowTimeString + "]: tick is False")
+            continue
+        time.sleep(61)
+        print("[" + nowTimeString + "]: action")
+        action(nowTimeString)
+
+
+startListen()
+# action("2019-06-13 08:00:00")
