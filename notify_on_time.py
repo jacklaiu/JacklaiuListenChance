@@ -1,7 +1,11 @@
 import jqdatasdk
 import talib
+import time
 import numpy as np
 import util.tools as tools
+from util.smtpclient import SmtpClient
+
+smtpClient = SmtpClient()
 
 def check(securitys, frequencys, nowTimeString=tools.getYMDHMS()):
     strArray = []
@@ -20,14 +24,16 @@ def check(securitys, frequencys, nowTimeString=tools.getYMDHMS()):
             )
             close = [float(x) for x in df['close']]
             df['RSI9'] = talib.RSI(np.array(close), timeperiod=9)
-            df['EMAF'] = talib.EMA(np.array(close), timeperiod=6)
-            df['EMAS'] = talib.EMA(np.array(close), timeperiod=23)
+            df['EMAF'] = talib.EMA(np.array(close), timeperiod=5)
+            df['EMAS'] = talib.EMA(np.array(close), timeperiod=16)
             count = getPricePosiArrayDur(df)
             rsi = df[df.EMAS == df.EMAS].RSI9.tolist()[-1]
             row += "#frequency:" + f + "_count:" + str(count) + "_rsi:" + str(rsi)
-            print('[' + tools.getYMDHMS() + ']: ' + nowTimeString + ' - ' + s + ' - ' + f + ' - ' + str(count) + ' - ' + str(rsi))
+            print('[' + tools.getYMDHMS() + ']: ' + nowTimeString + ' - ' + s + ' - ' + f + ' - ' + str(
+                count) + ' - ' + str(rsi))
         strArray.append(row)
     return strArray
+
 
 def getPricePosiArrayDur(df):
     indexList = df[df.EMAS == df.EMAS].index.tolist()
@@ -59,57 +65,81 @@ def getPricePosiArrayDur(df):
             break
     return count
 
-strArray = check([
-    'RB9999.XSGE',
-    'BU9999.XSGE',
-    'HC9999.XSGE',
-    'ZN9999.XSGE',
-    'AP9999.XZCE',
-    'CF9999.XZCE',
-    'MA9999.XZCE',
-    'SF9999.XZCE',
-    'SM9999.XZCE',
-    'ZC9999.XZCE',
-    'JD9999.XDCE',
-    'M9999.XDCE',
-    'EG9999.XDCE'
 
-], ['1d', '120m', '60m'], '2019-06-11 12:30:00')
-
-print("\n".join(strArray))
-
-rowStr = ""
-for row in strArray:
-    skipRow = False
-    cols = row.split('##')
-    security = cols[0].split(':')[-1][0:2]
-    frequencyRows = cols[-1].split('#')
-    rowmsg = [security]
-    counts = []
-    for fr in frequencyRows:
-        frequency = fr.split('_')[0].split(':')[1]
-        count = int(fr.split('_')[1].split(':')[1])
-        rsi = float(fr.split('_')[2].split(':')[1])
-        if count > 0 and rsi < 65:
-            skipRow = True
-            break
-        if count < 0 and rsi > 35:
-            skipRow = True
-            break
-        rowmsg.append(str(count))
-        counts.append(count)
-
-    if skipRow is True:
+while True:
+    nowTimeString = tools.getYMDHMS()
+    if tools.isFutureTradingTime(nowTimeString) is False or tools.isOpen(nowTimeString) is False:
+        time.sleep(61)
         continue
-    num = 0
-    if counts.__len__() == frequencyRows.__len__():
-        for c in counts:
-            if c >= 5:
-                num = num + 1
-        if num == counts.__len__():
+    hms = tools.getHMS()
+    tick = False
+    if "08:00:00" < hms < "08:01:00":
+        tick = True
+    elif "12:00:00" < hms < "12:01:00":
+        tick = True
+    elif "20:00:00" < hms < "20:31:00":
+        tick = True
+    if tick is False:
+        time.sleep(50)
+        continue
+    time.sleep(61)
+    strArray = check([
+        'RB9999.XSGE',
+        'BU9999.XSGE',
+        'HC9999.XSGE',
+        'ZN9999.XSGE',
+        'AP9999.XZCE',
+        'CF9999.XZCE',
+        'MA9999.XZCE',
+        'SF9999.XZCE',
+        'SM9999.XZCE',
+        'ZC9999.XZCE',
+        'JD9999.XDCE',
+        'M9999.XDCE',
+        'EG9999.XDCE'
+    ], ['1d', '120m', '60m'], nowTimeString)
+    print("\n".join(strArray))
+    rowStr = ""
+    for row in strArray:
+        skipRow = False
+        cols = row.split('##')
+        security = cols[0].split(':')[-1][0:2]
+        frequencyRows = cols[-1].split('#')
+        rowmsg = [security]
+        counts = []
+        rsis = []
+        for fr in frequencyRows:
+            frequency = fr.split('_')[0].split(':')[1]
+            count = int(fr.split('_')[1].split(':')[1])
+            rsi = float(fr.split('_')[2].split(':')[1])
+            # if count > 0 and rsi < 65:
+            #     skipRow = True
+            #     break
+            # if count < 0 and rsi > 35:
+            #     skipRow = True
+            #     break
+            rowmsg.append(str(count))
+            counts.append(count)
+            rsis.append(rsi)
+
+        if skipRow is True:
             continue
+        num = 0
+        if counts.__len__() == frequencyRows.__len__():
+            count1 = 0
+            for c in counts:
+                rsi = rsis[count1]
+                if count1 == 0 and (abs(c) > 5 or (c > 0 and rsi < 65) or (c < 0 and rsi > 35)):
+                    break
+                if abs(c) >= 5:
+                    num = num + 1
+                count1 = count1 + 1
+            if num == counts.__len__() or count1 == 0:
+                continue
+        if rowmsg.__len__() > 0:
+            rowStr = rowStr + "_".join(rowmsg) + "\n"
+        else:
+            rowStr = "正在搜寻机会..."
 
-    rowStr = rowStr + "_".join(rowmsg) + "\n"
-
-print(rowStr)
-
+    print(rowStr)
+    smtpClient.sendMail(subject="机会报告", content=rowStr)
