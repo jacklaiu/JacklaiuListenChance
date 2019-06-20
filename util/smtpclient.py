@@ -6,13 +6,14 @@ class SmtpClient():
     def __init__(self, enable=False):
         self.enable = True
 
-    def sendMail(self, subject, content, receivers='jacklaiu@163.com'):
+    def sendMail(self, subject, content, receivers='jacklaiuwx@qq.com'):
         if self.enable is False:
             return
         try:
-            url = 'http://212.64.7.83:64210/smtpclient/sendHtml?subject=' + subject + '&content=' + content + '&receivers=' + receivers
+            url = 'http://182.61.17.54:64210/smtpclient/sendHtml?subject=' + subject + '&content=' + content + '&receivers=' + receivers
             #print("@@@@@@@@@@@@@->subject: " + subject + " content: " + content)
-            requests.get(url)
+            ret = requests.get(url)
+            print(ret)
         except:
             pass
         #print('Send!')

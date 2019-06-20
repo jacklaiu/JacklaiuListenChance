@@ -10,7 +10,10 @@ smtpClient = SmtpClient()
 
 def check(securitys, frequencys, nowTimeString=tools.getYMDHMS()):
     strArray = []
-    jqdatasdk.auth('13268108673', 'king20110713')
+    try:
+        jqdatasdk.auth('13268108673', 'king20110713')
+    except:
+        smtpClient.sendMail(subject="JQdatasdk认证失败", content='JQdatasdk认证失败')
     print('[' + tools.getYMDHMS() + ']: start checking')
     for s in securitys:
         row = "security:" + s + "#"
