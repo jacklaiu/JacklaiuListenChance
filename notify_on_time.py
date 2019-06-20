@@ -64,7 +64,7 @@ def getPricePosiArrayDur(df):
         if lastestPosi == posi:
             count = count + 1
         else:
-            if posi != 1:
+            if lastestPosi != 0:
                 count = -count
             break
     return count
@@ -72,19 +72,19 @@ def getPricePosiArrayDur(df):
 
 def action(nowTimeString):
     strArray = check([
-        'RB9999.XSGE',
-        'BU9999.XSGE',
-        'HC9999.XSGE',
-        'ZN9999.XSGE',
-        'AP9999.XZCE',
-        'CF9999.XZCE',
-        'MA9999.XZCE',
-        'SF9999.XZCE',
-        'SM9999.XZCE',
-        'ZC9999.XZCE',
-        'JD9999.XDCE',
-        'M9999.XDCE',
-        'EG9999.XDCE'
+        'RB8888.XSGE',
+        'BU8888.XSGE',
+        'HC8888.XSGE',
+        'ZN8888.XSGE',
+        'AP8888.XZCE',
+        'CF8888.XZCE',
+        'MA8888.XZCE',
+        'SF8888.XZCE',
+        'SM8888.XZCE',
+        'ZC8888.XZCE',
+        'JD8888.XDCE',
+        'M8888.XDCE',
+        'EG8888.XDCE'
     ], ['1d', '120m', '60m'], nowTimeString)
     print("\n".join(strArray))
     rowStr = ""
@@ -117,7 +117,7 @@ def action(nowTimeString):
             count1 = 0
             for c in counts:
                 rsi = rsis[count1]
-                if count1 == 0 and (abs(c) > 5 or (c > 0 and rsi < 65) or (c < 0 and rsi > 35)):
+                if count1 == 0 and (abs(c) > 5 or (c > 0 and rsi < 60) or (c < 0 and rsi > 40)):
                     break
                 if abs(c) >= 5:
                     num = num + 1
@@ -153,4 +153,4 @@ def startListen():
 
 
 startListen()
-# action("2019-06-13 08:00:00")
+# action("2019-01-10 22:00:00")
