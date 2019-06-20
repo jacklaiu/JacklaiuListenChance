@@ -138,11 +138,7 @@ def startListen():
             continue
         hms = tools.getHMS()
         tick = False
-        if "10:00:00" < hms < "10:01:00":
-            tick = True
-        elif "14:00:00" < hms < "14:01:00":
-            tick = True
-        elif "22:00:00" < hms < "22:01:00":
+        if "08:00:00" < hms < "08:01:00" or "10:00:00" < hms < "10:01:00" or "12:30:00" < hms < "12:31:00" or "14:00:00" < hms < "14:01:00" or "20:30:00" < hms < "20:31:00" or "22:00:00" < hms < "22:01:00":
             tick = True
         if tick is False:
             time.sleep(50)
