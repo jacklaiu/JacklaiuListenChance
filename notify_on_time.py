@@ -7,6 +7,8 @@ from util.smtpclient import SmtpClient
 
 smtpClient = SmtpClient()
 
+def getListenForwardShakeUrl(security):
+    return "http://182.61.17.54:64211/lfs?security=" + security
 
 def check(securitys, frequencys, nowTimeString=tools.getYMDHMS()):
     strArray = []
@@ -29,7 +31,7 @@ def check(securitys, frequencys, nowTimeString=tools.getYMDHMS()):
             close = [float(x) for x in df['close']]
             df['RSI9'] = talib.RSI(np.array(close), timeperiod=9)
             df['EMAF'] = talib.EMA(np.array(close), timeperiod=5)
-            df['EMAS'] = talib.EMA(np.array(close), timeperiod=16)
+            df['EMAS'] = talib.EMA(np.array(close), timeperiod=10)
             count = getPricePosiArrayDur(df)
             rsi = df[df.EMAS == df.EMAS].RSI9.tolist()[-1]
             row += "#frequency:" + f + "_count:" + str(count) + "_rsi:" + str(rsi)
@@ -70,7 +72,7 @@ def getPricePosiArrayDur(df):
     return count
 
 
-def action(nowTimeString):
+def action(nowTimeString=tools.getYMDHMS()):
     strArray = check([
         'RB8888.XSGE',
         'BU8888.XSGE',
@@ -85,12 +87,13 @@ def action(nowTimeString):
         'JD8888.XDCE',
         'M8888.XDCE',
         'EG8888.XDCE'
-    ], ['1d', '120m', '60m'], nowTimeString)
+    ], ['5d', '1d', '120m', '60m'], nowTimeString)
     print("\n".join(strArray))
     rowStr = ""
     for row in strArray:
         skipRow = False
         cols = row.split('##')
+        realSecurity = cols[0].split(':')[-1]
         security = cols[0].split(':')[-1][0:2]
         frequencyRows = cols[-1].split('#')
         rowmsg = [security]
@@ -125,7 +128,7 @@ def action(nowTimeString):
             if num == counts.__len__() or count1 == 0:
                 continue
         if rowmsg.__len__() > 0:
-            rowStr = rowStr + "_".join(rowmsg) + "\n"
+            rowStr = rowStr + '<a href="'+getListenForwardShakeUrl(realSecurity)+'">' + "_".join(rowmsg) + "</a><br/>"
         else:
             rowStr = "正在搜寻机会..."
 
@@ -151,6 +154,5 @@ def startListen():
         print("[" + nowTimeString + "]: action")
         action(nowTimeString)
 
-
-startListen()
-# action("2019-01-10 22:00:00")
+# startListen()
+action()

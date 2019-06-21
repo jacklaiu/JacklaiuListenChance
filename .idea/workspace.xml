@@ -27,8 +27,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/util/smtpclient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+            <state relative-caret-position="330">
+              <caret line="15" column="22" lean-forward="true" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -45,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/notify_on_time.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="156" lean-forward="true" selection-start-line="156" selection-end-line="156" />
+            <state relative-caret-position="-2947">
+              <caret line="7" column="25" lean-forward="true" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -78,8 +78,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/databody.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+            <state relative-caret-position="-667">
+              <caret line="98" column="47" lean-forward="true" selection-start-line="98" selection-start-column="47" selection-end-line="98" selection-end-column="47" />
               <folding>
                 <element signature="e#1#17#0" expanded="true" />
               </folding>
@@ -90,7 +90,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/traderbody.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3916">
+            <state relative-caret-position="2684">
               <caret line="185" selection-start-line="185" selection-end-line="185" />
               <folding>
                 <element signature="e#1#17#0" expanded="true" />
@@ -166,8 +166,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="283" />
+    <option name="y" value="37" />
     <option name="width" value="1342" />
     <option name="height" value="916" />
   </component>
@@ -186,6 +186,11 @@
             <path>
               <item name="JacklaiuListenChance" type="b2602c69:ProjectViewProjectNode" />
               <item name="JacklaiuListenChance" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JacklaiuListenChance" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JacklaiuListenChance" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -386,6 +391,7 @@
       <workItem from="1560949573780" duration="4252000" />
       <workItem from="1560954051871" duration="5962000" />
       <workItem from="1561047088564" duration="1571000" />
+      <workItem from="1561081920450" duration="5574000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <created>1559751490477</created>
@@ -482,7 +488,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="181400000" />
+    <option name="totallyTimeSpent" value="186974000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -497,7 +503,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14179105" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1433902" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -511,8 +517,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.329718" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.39658847" side_tool="true" weight="0.3109426" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="11" sideWeight="0.6034115" visible="true" weight="0.45336226" />
-      <window_info anchor="bottom" id="Terminal" order="12" weight="0.36767897" />
+      <window_info anchor="bottom" id="Python Console" order="11" sideWeight="0.6034115" visible="true" weight="0.37811485" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.30985916" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -573,17 +579,17 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/notify_on_time.py</url>
-          <line>17</line>
+          <line>19</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/notify_on_time.py</url>
-          <line>32</line>
+          <line>34</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/notify_on_time.py</url>
-          <line>58</line>
+          <line>60</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
@@ -605,24 +611,11 @@
     <entry file="file://$PROJECT_DIR$/util/dataviewer.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://C:/vnstudio/Lib/site-packages/jqdatasdk/client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/vnstudio/Lib/site-packages/jqdatasdk/client.py" />
     <entry file="file://$PROJECT_DIR$/util/tools.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="167">
           <caret line="452" column="4" selection-start-line="452" selection-start-column="4" selection-end-line="452" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/smtpclient.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -650,20 +643,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/databody.py">
+    <entry file="file://$PROJECT_DIR$/util/smtpclient.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
-          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+          <caret line="15" column="22" lean-forward="true" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/traderbody.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2684">
+          <caret line="185" selection-start-line="185" selection-end-line="185" />
           <folding>
             <element signature="e#1#17#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/traderbody.py">
+    <entry file="file://$PROJECT_DIR$/databody.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3916">
-          <caret line="185" selection-start-line="185" selection-end-line="185" />
+        <state relative-caret-position="-667">
+          <caret line="98" column="47" lean-forward="true" selection-start-line="98" selection-start-column="47" selection-end-line="98" selection-end-column="47" />
           <folding>
             <element signature="e#1#17#0" expanded="true" />
           </folding>
@@ -672,8 +672,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/notify_on_time.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="156" lean-forward="true" selection-start-line="156" selection-end-line="156" />
+        <state relative-caret-position="-2947">
+          <caret line="7" column="25" lean-forward="true" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
