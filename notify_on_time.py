@@ -8,6 +8,10 @@ import base64
 
 smtpClient = SmtpClient()
 
+frequencyArr = ['60m', '30m', '10m']
+testTimePoint = '2019-06-11 14:00:00'
+
+
 def getListenForwardShakeUrl(security):
     data = "security:" + security + "_frequency:60m"
     return "http://localhost:64211/lfs?data=" + data
@@ -89,7 +93,7 @@ def action(nowTimeString=tools.getYMDHMS()):
         'JD8888.XDCE',
         'M8888.XDCE',
         'EG8888.XDCE'
-    ], ['60m', '30m', '10m'], nowTimeString)
+    ], frequencyArr, nowTimeString)
     print("\n".join(strArray))
     rowStr = ""
     rowHtml = ""
@@ -160,4 +164,4 @@ def startListen():
         action(nowTimeString)
 
 # startListen()
-action()
+action(testTimePoint)
