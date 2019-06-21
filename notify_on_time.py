@@ -4,11 +4,13 @@ import time
 import numpy as np
 import util.tools as tools
 from util.smtpclient import SmtpClient
+import base64
 
 smtpClient = SmtpClient()
 
 def getListenForwardShakeUrl(security):
-    return "http://182.61.17.54:64211/lfs?security=" + security
+    data = "security:" + security + "_frequency:60m"
+    return "http://localhost:64211/lfs?data=" + data
 
 def check(securitys, frequencys, nowTimeString=tools.getYMDHMS()):
     strArray = []
@@ -87,9 +89,10 @@ def action(nowTimeString=tools.getYMDHMS()):
         'JD8888.XDCE',
         'M8888.XDCE',
         'EG8888.XDCE'
-    ], ['5d', '1d', '120m', '60m'], nowTimeString)
+    ], ['60m', '30m', '10m'], nowTimeString)
     print("\n".join(strArray))
     rowStr = ""
+    rowHtml = ""
     for row in strArray:
         skipRow = False
         cols = row.split('##')
@@ -128,12 +131,14 @@ def action(nowTimeString=tools.getYMDHMS()):
             if num == counts.__len__() or count1 == 0:
                 continue
         if rowmsg.__len__() > 0:
-            rowStr = rowStr + '<a href="'+getListenForwardShakeUrl(realSecurity)+'">' + "_".join(rowmsg) + "</a><br/>"
+            rowHtml = rowHtml + '<a href="'+getListenForwardShakeUrl(realSecurity)+'">' + "_".join(rowmsg) + "</a><br/>"
+            rowStr = rowStr + "_".join(rowmsg) + '\n'
         else:
-            rowStr = "正在搜寻机会..."
+            rowHtml = "正在搜寻机会..."
 
     print(rowStr)
-    smtpClient.sendMail(subject="[" + nowTimeString + "]: 机会报告", content=rowStr)
+    print(rowHtml)
+    smtpClient.sendMail(subject="[" + nowTimeString + "]: 机会报告", content=rowHtml)
 
 
 def startListen():
