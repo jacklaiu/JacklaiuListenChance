@@ -4,7 +4,7 @@ import requests
 class SmtpClient():
 
     def __init__(self, enable=False):
-        self.enable = True
+        self.enable = enable
 
     def sendMail(self, subject, content, receivers='jacklaiuwx@qq.com'):
         if self.enable is False:

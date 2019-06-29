@@ -4,12 +4,12 @@ import time
 import numpy as np
 import util.tools as tools
 from util.smtpclient import SmtpClient
-import base64
+import PriceDataFetcher.util.pd2mysql as p2m
 
 smtpClient = SmtpClient()
 
 frequencyArr = ['60m', '30m', '10m']
-testTimePoint = '2019-06-11 14:00:00'
+testTimePoint = '2019-06-13 08:00:00'
 
 
 def getListenForwardShakeUrl(security):
@@ -18,16 +18,12 @@ def getListenForwardShakeUrl(security):
 
 def check(securitys, frequencys, nowTimeString=tools.getYMDHMS()):
     strArray = []
-    try:
-        jqdatasdk.auth('13268108673', 'king20110713')
-    except:
-        smtpClient.sendMail(subject="JQdatasdk认证失败", content='JQdatasdk认证失败')
     print('[' + tools.getYMDHMS() + ']: start checking')
     for s in securitys:
         row = "security:" + s + "#"
         for f in frequencys:
             print('[' + tools.getYMDHMS() + ']: start handling security - ' + str(s) + ' frequency - ' + str(f))
-            df = jqdatasdk.get_price(
+            df = p2m.getPrice(
                 security=s,
                 count=50,
                 end_date=nowTimeString[0:nowTimeString.rindex(':') + 1] + '30',
@@ -140,6 +136,7 @@ def action(nowTimeString=tools.getYMDHMS()):
         else:
             rowHtml = "正在搜寻机会..."
 
+    rowHtml = rowHtml + '\n' + str("Frequencies: " + "_".join(frequencyArr))
     print(rowStr)
     print(rowHtml)
     smtpClient.sendMail(subject="[" + nowTimeString + "]: 机会报告", content=rowHtml)
@@ -153,7 +150,12 @@ def startListen():
             continue
         hms = tools.getHMS()
         tick = False
-        if "08:00:00" < hms < "08:01:00" or "10:00:00" < hms < "10:01:00" or "12:30:00" < hms < "12:31:00" or "14:00:00" < hms < "14:01:00" or "20:30:00" < hms < "20:31:00" or "22:00:00" < hms < "22:01:00":
+        if "08:00:00" < hms < "08:01:00" or \
+                "10:00:00" < hms < "10:01:00" or \
+                "12:30:00" < hms < "12:31:00" or \
+                "14:00:00" < hms < "14:01:00" or \
+                "20:30:00" < hms < "20:31:00" or \
+                "22:00:00" < hms < "22:01:00":
             tick = True
         if tick is False:
             time.sleep(50)

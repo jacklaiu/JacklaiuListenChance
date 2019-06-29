@@ -4,12 +4,16 @@ import time
 import json
 import jqdatasdk
 import datetime
+import platform
 from chinese_calendar import is_workday  # , is_holiday
 import os
 # 没有夜盘
 str_no_night = 'jd_ap_v8_v9_sm_sf_l9_l8'
 # 23:00就收市
 str_no_2330 = 'rb'
+
+def usePlatform():
+  return platform.system()
 
 def acJQ_StockName(security):
     pre0 = security[0:3]
@@ -33,11 +37,12 @@ def isStock(security):
         else:
             return False
 
-def log(words=''):
-    ymd = getYMD()
-    f = open('log_' + ymd, 'a')
-    f.write(words + "\n")
-    f.close()
+def log(words='', funcname=None):
+    if funcname is not None:
+        funcname = ' Func#' + funcname
+    else:
+        funcname = ''
+    print('[' + getYMDHMS() + ']'+funcname+': ' + str(words))
 
 def clearProperties():
     f = open('properties.txt', 'w')
@@ -344,12 +349,26 @@ def getTimeSerialBySecurity(starttime, count, periodSec, security):
         count = count - 1
     return list
 
+def duration_timeday(timestr1='2018-01-01 01:55:00', timestr2='2018-01-01 01:54:59'):
+    ms_time1 = string2timestamp(timestr1)
+    ms_time2 = string2timestamp(timestr2)
+    return abs(float(ms_time1) - float(ms_time2)) / 60 / 60 / 24
+
+def duration_timemin(timestr1='2018-01-01 01:55:00', timestr2='2018-01-01 01:54:59'):
+    ms_time1 = string2timestamp(timestr1)
+    ms_time2 = string2timestamp(timestr2)
+    return abs(float(ms_time1) - float(ms_time2)) / 60
 
 # 两个时间差距，返回值单位秒
-def diff_time_second(timestr1='2018-01-01 01:55:00', timestr2='2018-01-01 01:54:59'):
+def duration_timesecond(timestr1='2018-01-01 01:55:00', timestr2='2018-01-01 01:54:59'):
     ms_time1 = string2timestamp(timestr1)
     ms_time2 = string2timestamp(timestr2)
     return abs(float(ms_time1) - float(ms_time2))
+
+def duration_timemills(timestr1='2018-01-01 01:55:00', timestr2='2018-01-01 01:54:59'):
+    ms_time1 = string2timestamp(timestr1)
+    ms_time2 = string2timestamp(timestr2)
+    return abs(float(ms_time1) - float(ms_time2)) * 1000
 
 def string2Datetime(strValue) :
     d = datetime.datetime.strptime(strValue, "%Y-%m-%d %H:%M:%S")
@@ -508,3 +527,5 @@ def getRate(fromPrice, toPrice):
     return rate
 
 
+# str1 = '1d'
+# print(str1[-1:])

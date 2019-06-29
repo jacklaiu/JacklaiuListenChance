@@ -4,6 +4,7 @@ import talib
 import time
 import numpy as np
 import util.tools as util
+import PriceDataFetcher.core.pd2mysql as p2m
 
 class DataBody(object):
 
@@ -17,8 +18,8 @@ class DataBody(object):
         self._to0100_securies_str = "ZN"
 
     def getLastestPrice(self, nowTimeString):
-        jqdatasdk.auth('13268108673', 'king20110713')
-        newDf = jqdatasdk.get_price(
+        
+        newDf = p2m.getPrice(
             security=self.security,
             count=1,
             end_date=nowTimeString[0:nowTimeString.rindex(':') + 1] + '30',
@@ -39,10 +40,9 @@ class DataBody(object):
             return False
         newRow = None
         newIndex = None
-        jqdatasdk.auth('13268108673', 'king20110713')
         if self.df is None:
             try:
-                self.df = jqdatasdk.get_price(
+                self.df = p2m.getPrice(
                     security=self.security,
                     count=300,
                     end_date=nowTimeString[0:nowTimeString.rindex(':') + 1] + '30',
@@ -55,7 +55,7 @@ class DataBody(object):
         else:
 
             try:
-                newDf = jqdatasdk.get_price(
+                newDf = p2m.getPrice(
                     security=self.security,
                     count=1,
                     end_date=nowTimeString[0:nowTimeString.rindex(':') + 1] + '30',
@@ -67,8 +67,8 @@ class DataBody(object):
             except:
                 try:
                     time.sleep(5)
-                    jqdatasdk.auth('13268108673', 'king20110713')
-                    newDf = jqdatasdk.get_price(
+                    
+                    newDf = p2m.getPrice(
                         security=self.security,
                         count=1,
                         end_date=nowTimeString[0:nowTimeString.rindex(':') + 1] + '30',
